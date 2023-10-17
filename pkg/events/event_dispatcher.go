@@ -2,6 +2,7 @@ package events
 
 import (
 	"errors"
+	"sync"
 )
 
 var ErrEventHandlerAlreadyRegistered = errors.New("event handler already registered")
@@ -38,9 +39,14 @@ func (ed *EventDispatcher) Dispatch(event EventInterface) error {
 		return ErrEventHandlerNotFoundByEventName
 	}
 
+	wg := &sync.WaitGroup{}
+
 	for _, eventHandler := range handlersByEventName {
-		eventHandler.Handle(event)
+		wg.Add(1)
+		go eventHandler.Handle(event, wg)
 	}
+
+	wg.Wait()
 
 	return nil
 }
