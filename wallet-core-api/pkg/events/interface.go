@@ -9,6 +9,7 @@ type EventInterface interface {
 	GetName() string
 	GetDateTime() time.Time
 	GetPayload() interface{}
+	SetPayload(payload interface{})
 }
 
 type EventHandlerInterface interface {
@@ -16,10 +17,9 @@ type EventHandlerInterface interface {
 }
 
 type EventDispatcherInterface interface {
-	Register(eventName string, eventHandler EventHandlerInterface) error
+	Register(eventName string, handler EventHandlerInterface) error
 	Dispatch(event EventInterface) error
-	Remove(eventName string, eventHandler EventHandlerInterface)
-	Has(eventName string, eventHandler EventHandlerInterface) bool
+	Remove(eventName string, handler EventHandlerInterface) error
+	Has(eventName string, handler EventHandlerInterface) bool
 	Clear()
-	GetHandlers() map[string][]EventHandlerInterface
 }
