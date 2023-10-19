@@ -2,7 +2,7 @@ version: '3'
 
 services:
   goapp: 
-    build: fc-eda
+    build: ./wallet-core-api
     platform: linux/amd64
     volumes:
       - ./wallet-core-api:/app
