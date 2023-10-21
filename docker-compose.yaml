@@ -4,10 +4,10 @@ services:
   goapp: 
     build: ./wallet-core-api
     platform: linux/amd64
-    volumes:
-      - ./wallet-core-api:/app
     ports:
       - 8080:8080
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.7

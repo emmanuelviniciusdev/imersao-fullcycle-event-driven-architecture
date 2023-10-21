@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com.br/devfullcycle/fc-ms-wallet/internal/migration"
 
 	"github.com.br/devfullcycle/fc-ms-wallet/internal/database"
 	"github.com.br/devfullcycle/fc-ms-wallet/internal/event"
@@ -38,6 +39,9 @@ func main() {
 	eventDispatcher.Register("BalanceUpdated", handler.NewUpdateBalanceKafkaHandler(kafkaProducer))
 	transactionCreatedEvent := event.NewTransactionCreated()
 	balanceUpdatedEvent := event.NewBalanceUpdated()
+
+	migration.RunMigrationClient(db)
+	migration.RunMigrationAccount(db)
 
 	clientDb := database.NewClientDB(db)
 	accountDb := database.NewAccountDB(db)
