@@ -42,6 +42,7 @@ func main() {
 
 	migration.RunMigrationClient(db)
 	migration.RunMigrationAccount(db)
+	migration.RunMigrationTransaction(db)
 
 	clientDb := database.NewClientDB(db)
 	accountDb := database.NewAccountDB(db)
