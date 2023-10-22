@@ -8,6 +8,9 @@ services:
       - 8080:8080
     depends_on:
       - mysql
+      - zookeeper
+      - control-center
+      - kafka
 
   wallet-balance-api:
     build: ./wallet-balance-api
@@ -16,6 +19,8 @@ services:
       - 3003:3003
     depends_on:
       - mysql-wallet-balance-api
+      - zookeeper
+      - control-center
       - kafka
 
   mysql:
